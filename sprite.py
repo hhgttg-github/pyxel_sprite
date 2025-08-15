@@ -215,35 +215,37 @@ class SwitchingSp(Sprite):
 
 #=======================================
 #
-# ANIMATED SPRITE (正方形のみ)
+# ANIMATED SPRITE 2 (正方形のみ)
 
-class AnimatedSp(Sprite):
+class AniSp2(Sprite):
 
     def __init__(self,x,y,id,hit,interval,key,sp_group): #idは最初の画像番号
         super().__init__(x,y,id,hit,sp_group)
         
         self.start = pyxel.frame_count
-        self.interval = interval
+        self.interval = interval #60fps なので60で1秒間隔でアニメーション
         self.next = self.start + interval
 
         self.piece = [id]
 
+        #frame["右"]などの"右"がkey。keyが変わればindexを0に戻す
         self.key = key
         self.previous_key = key
         self.frame_index = 0
         self.frame = {}
         self.change_table = {}
 
-    def add_frame(self,k,f): #fは最低長さ1以上のリスト
-        self.frame[k] = []
-        if len(f) == 1:
-            self.frame[k].append([f[0],0])
+    def add_frame(self,key,f_list): 
+        #f_listは最低長さ1以上のリストでアニメーション用のリスト
+        if len(f_list) == 1:             #固定画像で要素が1の場合、
+            self.frame[key] = f_list     #f_listは[?]と要素1のリストでないといけない
+            self.change_tabel[key] = [0] #次の要素はインデックス0で毎回同じ
+#            self.frame[key].append([f[0],0])
         else:
-            i = 1
-            for j in f:
-                self.frame[k].append([j,i])
-                i += 1
-            self.frame[k][-1][1] = 0
+            self.frame[key] = f_list
+            for i in range(len(f_list)):
+                self.change_table[key].append(i+1)
+            self.chage_table[key][-1] = 0
 
     def update(self):
         super().update()
@@ -253,9 +255,9 @@ class AnimatedSp(Sprite):
             self.next = self.start + self.interval
 
             if self.key == self.previous_key:
-                self.frame_index = self.frame[self.key][self.frame_index][1]
+                self.frame_index = self.change_table[self.frame_index]
             else:
                 self.frame_index = 0
                 self.previous_key = self.key                
-            self.id = self.frame[self.key][self.frame_index][0]
+            self.id = self.frame[self.key][self.frame_index]
             self.u, self.v = self.sp_group.return_uv(self.id)
