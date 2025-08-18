@@ -269,10 +269,10 @@ class AniSprite(Sprite):
 
 class Game:
     def __init__(self):
-        pyxel.init(256,256)
+        pyxel.init(128,128)
         pyxel.load("sprite.pyxres")
-        self.a = AniSprite(0,0,0,0,30,"r",sp4group)
-        self.a.add_frame("r",[0,1,2,3])
+        self.a = AniSprite(0,0,0,0,2,"r",sp4group)
+        self.a.add_frame("r",[0,2,1,3,1,0])
         self.a.speed(256,256)
         pyxel.run(self.update,self.draw)
         
