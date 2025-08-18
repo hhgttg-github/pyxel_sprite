@@ -257,7 +257,7 @@ class AniSprite(Sprite):
             self.next = self.start + self.interval
 
             if self.key == self.previous_key:
-                self.frame_index = self.change_table[self.frame_index]
+                self.frame_index = self.change_table[self.key][self.frame_index]
             else:
                 self.frame_index = 0
                 self.previous_key = self.key                
