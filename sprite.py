@@ -215,9 +215,9 @@ class SwitchingSp(Sprite):
 
 #=======================================
 #
-# ANIMATED SPRITE 2 (正方形のみ)
+# ANIMATED SPRITE (正方形のみ)
 
-class AniSp2(Sprite):
+class AniSprite(Sprite):
 
     def __init__(self,x,y,id,hit,interval,key,sp_group): #idは最初の画像番号
         super().__init__(x,y,id,hit,sp_group)
@@ -243,9 +243,11 @@ class AniSp2(Sprite):
 #            self.frame[key].append([f[0],0])
         else:
             self.frame[key] = f_list
+            l=[]
             for i in range(len(f_list)):
-                self.change_table[key].append(i+1)
-            self.chage_table[key][-1] = 0
+                l.append(i+1)
+            l[-1] = 0
+            self.change_table[key] = l
 
     def update(self):
         super().update()
@@ -261,3 +263,28 @@ class AniSp2(Sprite):
                 self.previous_key = self.key                
             self.id = self.frame[self.key][self.frame_index]
             self.u, self.v = self.sp_group.return_uv(self.id)
+
+
+####====================================
+
+class Game:
+    def __init__(self):
+        pyxel.init(256,256)
+        pyxel.load("sprite.pyxres")
+        self.a = AniSprite(0,0,0,0,30,"r",sp4group)
+        self.a.add_frame("r",[0,1,2,3])
+        self.a.speed(256,256)
+        pyxel.run(self.update,self.draw)
+        
+    def update(self):
+        if pyxel.btnp(pyxel.KEY_Q):
+            pyxel.quit()
+        self.a.update()
+
+    def draw(self):
+        pyxel.cls(0)
+        self.a.draw()
+
+
+if __name__=="__main__":
+    Game()
