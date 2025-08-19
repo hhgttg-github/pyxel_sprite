@@ -1,1 +1,0 @@
-# pyxel_sprite

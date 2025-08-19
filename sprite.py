@@ -104,9 +104,9 @@ class SpGroup():
     def return_uv(self, id):
         return(self.id_list[id][0], self.id_list[id][1])
 
-sp2group  = SpGroup(0, DOT2, DOT2, DOT2_Y, DOT2_ROW)
-sp4group  = SpGroup(0, DOT4, DOT4, DOT4_Y, DOT4_ROW)
-sp8group  = SpGroup(0, DOT8, DOT8, DOT8_Y, DOT8_ROW)
+sp2Group  = SpGroup(0, DOT2, DOT2, DOT2_Y, DOT2_ROW)
+sp4Group  = SpGroup(0, DOT4, DOT4, DOT4_Y, DOT4_ROW)
+sp8Group  = SpGroup(0, DOT8, DOT8, DOT8_Y, DOT8_ROW)
 sp16Group = SpGroup(0, DOT16,DOT16, DOT16_Y, DOT16_ROW)
 sp32Group = SpGroup(0, DOT32,DOT32, DOT32_Y, DOT32_ROW)
 
@@ -239,7 +239,7 @@ class AniSprite(Sprite):
         #f_listは最低長さ1以上のリストでアニメーション用のリスト
         if len(f_list) == 1:             #固定画像で要素が1の場合、
             self.frame[key] = f_list     #f_listは[?]と要素1のリストでないといけない
-            self.change_tabel[key] = [0] #次の要素はインデックス0で毎回同じ
+            self.change_table[key] = [0] #次の要素はインデックス0で毎回同じ
 #            self.frame[key].append([f[0],0])
         else:
             self.frame[key] = f_list
@@ -271,7 +271,7 @@ class Game:
     def __init__(self):
         pyxel.init(128,128)
         pyxel.load("sprite.pyxres")
-        self.a = AniSprite(0,0,0,0,2,"r",sp4group)
+        self.a = AniSprite(0,0,0,0,2,"r",sp4Group)
         self.a.add_frame("r",[0,2,1,3,1,0])
         self.a.speed(256,256)
         pyxel.run(self.update,self.draw)
